@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Surprise</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+text-align:center;
+background:linear-gradient(45deg,#ff758c,#ff7eb3);
+color:white;
+overflow-x:hidden;
+}
+
+h1{
+margin-top:80px;
+font-size:60px;
+}
+
+button{
+padding:15px 30px;
+font-size:20px;
+border:none;
+border-radius:10px;
+background:#ff4081;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#e91e63;
+}
+
+#giftBox{
+font-size:120px;
+cursor:pointer;
+margin-top:30px;
+}
+
+#message{
+display:none;
+font-size:30px;
+margin-top:20px;
+}
+
+#gallery img{
+width:200px;
+margin:10px;
+border-radius:10px;
+}
+
+#cake{
+font-size:120px;
+cursor:pointer;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎉 Happy Birthday 🎉</h1>
+
+<h2 id="countdown"></h2>
+
+<div id="giftBox">🎁</div>
+
+<div id="message">
+❤️ You are the most special person in my life ❤️
+</div>
+
+<br><br>
+
+<div id="cake">🎂</div>
+<p>Click the cake to blow candles</p>
+
+<br>
+
+<button onclick="showGallery()">See Memories 📸</button>
+
+<div id="gallery" style="display:none">
+<img src="https://picsum.photos/200?1">
+<img src="https://picsum.photos/200?2">
+<img src="https://picsum.photos/200?3">
+</div>
+
+<audio autoplay loop>
+<source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
+</audio>
+
+<canvas id="confetti"></canvas>
+
+<script>
+
+// gift open
+document.getElementById("giftBox").onclick=function(){
+document.getElementById("message").style.display="block";
+confettiStart();
+}
+
+// gallery
+function showGallery(){
+document.getElementById("gallery").style.display="block";
+}
+
+// cake candle interaction
+document.getElementById("cake").onclick=function(){
+alert("Candles blown! Make a wish 🎂");
+fireworks();
+}
+
+// countdown
+var birthday=new Date("2026-04-01").getTime();
+
+setInterval(function(){
+var now=new Date().getTime();
+var distance=birthday-now;
+
+var days=Math.floor(distance/(1000*60*60*24));
+var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+document.getElementById("countdown").innerHTML=
+"Birthday in "+days+" days "+hours+" hours";
+},1000);
+
+
+// simple confetti
+function confettiStart(){
+var canvas=document.getElementById("confetti");
+var ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+for(let i=0;i<150;i++){
+ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+ctx.fillRect(Math.random()*canvas.width,
+Math.random()*canvas.height,5,5);
+}
+}
+
+// fireworks
+function fireworks(){
+for(let i=0;i<10;i++){
+setTimeout(function(){
+alert("🎆 BOOM! Fireworks!");
+},i*300);
+}
+}
+
+</script>
+
+</body>
+</html>
