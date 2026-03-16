@@ -61,17 +61,15 @@ cursor:pointer;
 }
 
 #typing{
-border-right:3px solid white;
-white-space:nowrap;
-overflow:hidden;
-width:0;
 font-size:28px;
-animation:typing 5s steps(40,end) forwards;
+margin-top:20px;
 }
 
-@keyframes typing{
-from{width:0}
-to{width:100%}
+.slideshow{
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:30px;
 }
 
 .slideshow img{
@@ -91,22 +89,16 @@ pointer-events:none;
 </head>
 
 <body>
+
 <audio id="music" loop>
 <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
-<button onclick="startSite()">Start</button>
-  <script>
-function startSite(){
-document.getElementById("music").play();
-next(2);
-}
-</script>
 
 <!-- PAGE 1 -->
 <div class="page active" id="p1">
 <h1>🎉 Welcome 🎉</h1>
 <h2>A Special Birthday Surprise</h2>
-<button onclick="next(2)">Start</button>
+<button onclick="startSite()">Start</button>
 </div>
 
 <!-- PAGE 2 BALLOONS -->
@@ -126,21 +118,8 @@ next(2);
 <div class="page" id="p3">
 <h1>Special Message</h1>
 <h2 id="typing"></h2>
-
-<script>
-let text = "Happy 20th Birthday! May your life be full of happiness ❤️";
-let i = 0;
-
-function typeEffect() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeEffect, 70);
-  }
-}
-
-typeEffect();
-</script>
+<button onclick="next(4)">Next</button>
+</div>
 
 <!-- PAGE 4 GIFT -->
 <div class="page" id="p4">
@@ -158,7 +137,7 @@ typeEffect();
 <button onclick="next(6)">Next</button>
 </div>
 
-<!-- PAGE 6 SLIDESHOW -->
+<!-- PAGE 6 MEMORIES -->
 <div class="page" id="p6">
 <h1>📸 Memories</h1>
 
@@ -192,6 +171,23 @@ typeEffect();
 
 <script>
 
+let text = "Happy 20th Birthday! May your life be full of happiness ❤️";
+let i = 0;
+
+function typeEffect(){
+if(i < text.length){
+document.getElementById("typing").innerHTML += text.charAt(i);
+i++;
+setTimeout(typeEffect,70);
+}
+}
+
+function startSite(){
+document.getElementById("music").play();
+next(2);
+typeEffect();
+}
+
 function next(n){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById("p"+n).classList.add("active");
@@ -213,11 +209,9 @@ var i=0;
 slides[i].style.display="block";
 
 setInterval(function(){
-
 slides[i].style.display="none";
 i=(i+1)%slides.length;
 slides[i].style.display="block";
-
 },2000);
 
 }
@@ -231,14 +225,12 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 for(let i=0;i<200;i++){
-
 ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
 ctx.beginPath();
 ctx.arc(Math.random()*canvas.width,
 Math.random()*canvas.height,
 5,0,Math.PI*2);
 ctx.fill();
-
 }
 
 }
