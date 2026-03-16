@@ -91,10 +91,16 @@ pointer-events:none;
 </head>
 
 <body>
-
-<audio autoplay loop>
-<source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
+<audio id="music" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
 </audio>
+<button onclick="startSite()">Start</button>
+  <script>
+function startSite(){
+document.getElementById("music").play();
+next(2);
+}
+</script>
 
 <!-- PAGE 1 -->
 <div class="page active" id="p1">
@@ -119,9 +125,22 @@ pointer-events:none;
 <!-- PAGE 3 TYPING MESSAGE -->
 <div class="page" id="p3">
 <h1>Special Message</h1>
-<div id="typing">Happy 20th Birthday! May your life be full of happiness ❤️</div>
-<button onclick="next(4)">Next</button>
-</div>
+<h2 id="typing"></h2>
+
+<script>
+let text = "Happy 20th Birthday! May your life be full of happiness ❤️";
+let i = 0;
+
+function typeEffect() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeEffect, 70);
+  }
+}
+
+typeEffect();
+</script>
 
 <!-- PAGE 4 GIFT -->
 <div class="page" id="p4">
