@@ -93,7 +93,7 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
 <body>
 
 <audio id="music" loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <!-- PAGE 1 -->
@@ -104,18 +104,18 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
 
 <h2>A Special Birthday Surprise</h2>
 
-<h2>“Welcome to the most beautiful day of my life</h2>
+<h2>Welcome to the most beautiful day of my life</h2>
 
-<h2>“Some days are special… but today is extraordinary,
+<h2>Some days are special… but today is extraordinary,
 because it’s the birthday of the man who makes my life a beautiful story.
 Happy Birthday my love! 🎂✨
 😘 😘 😘
 💋 💋 💋
 😚 😚 😚
 😗 😗 😗
-🥰😘💋”</h2>
+🥰😘💋</h2>
 
-<h1>“Happy Birthday my love 😘💋”</h1>
+<h1>Happy Birthday my love 😘💋</h1>
 
 <button onclick="startSite()">Start</button>
 
@@ -316,8 +316,8 @@ May your life be full of success, happiness, and love 🌟
 I promise to stand by your side in every moment 🤝
 You are the reason my heart beats with so much love 💓
 I love you more than words can ever say 😘💋
-Happy Birthday my handsome king 👑❤️`;
-Let text=”என் அன்புக்குரியவருக்கு இனிய 20வது பிறந்தநாள் வாழ்த்துக்கள் 🎂❤️
+Happy Birthday my handsome king 👑❤️
+என் அன்புக்குரியவருக்கு இனிய 20வது பிறந்தநாள் வாழ்த்துக்கள் 🎂❤️
 இன்று என் வாழ்க்கையில் மிகவும் சிறப்பு மிக்க நாள் ✨
 ஏனெனில் என் வாழ்க்கையை அழகாக்கிய மனிதர் இந்த நாளில் பிறந்தார் 🌹
 நீ என் வாழ்க்கையில் வந்த பிறகு எல்லாம் இன்னும் அழகாக மாறிவிட்டது 💖
@@ -330,7 +330,7 @@ Let text=”என் அன்புக்குரியவருக்கு 
 உன் வாழ்க்கை சந்தோஷமும் வெற்றியும் நிறைந்ததாக இருக்கட்டும் 🌟
 எப்போதும் உன் பக்கத்தில் நான் இருப்பேன் 🤝
 உன்னை வார்த்தைகளால் சொல்ல முடியாத அளவுக்கு நான் காதலிக்கிறேன் 😘💋
-இனிய பிறந்தநாள் வாழ்த்துக்கள் என் அன்பே ❤️👑";
+இனிய பிறந்தநாள் வாழ்த்துக்கள் என் அன்பே ❤️👑`;
 
 let i=0;
 
@@ -343,10 +343,11 @@ setTimeout(typeEffect,50);
 }
 
 function startSite(){
-document.getElementById("music").play();
-createBalloons();
-next(2);
-typeEffect();
+   const audio = document.getElementById("music");
+   audio.play().catch(e => console.log("Audio blocked:", e));
+  createBalloons();
+  next(2);
+  typeEffect();
 }
 
 function next(n){
@@ -366,14 +367,14 @@ document.body.appendChild(b);
 }
 
 function openGift(){
-document.getElementById("giftMsg").innerHTML=
-‘🎉 Surprise!  You are turning 20 🎉
+document.getElementById("giftMsg").innerHTML = `
+🎉 Surprise!  You are turning 20 🎉
 A very special moment is here…
 Today you are not just celebrating a birthday,
 You are celebrating 20 amazing years of life! 🎂
 Happy 20th Birthday my love ❤️
-May your dreams fly higher than the sky 🎈’;
-`💖 சர்ப்ரைஸ் என் அன்பே! 💖
+May your dreams fly higher than the sky 🎈
+💖 சர்ப்ரைஸ் என் அன்பே! 💖
 இந்த Gift Box ஒரு சாதாரண பரிசு இல்லை 🎁
 இதில் என் இதயத்தின் முழு அன்பும் இருக்கிறது ❤️
 
@@ -392,7 +393,9 @@ May your dreams fly higher than the sky 🎈’;
 மற்றும் நிறைய கனவுகளை கொண்டு வரட்டும் 🌟
 
 இனிய 20வது பிறந்தநாள் வாழ்த்துக்கள்
-என் இதயத்தின் அரசனே 👑❤️ ‘;}
+என் இதயத்தின் அரசனே 👑❤️
+`;
+}
 
 function blowCandles(){
 document.getElementById("cakeMessage").style.display="block";
@@ -418,6 +421,16 @@ slides[i].style.display="block";
 }
 
 function fireworks(){
+  for(let i=0;i<30;i++){
+    let f = document.createElement("div");
+    f.className="firework";
+    f.innerHTML = "🎇";
+    f.style.left=Math.random()*100+"%";
+    f.style.bottom="0px";
+    f.style.animationDuration=1+Math.random()*2+"s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2500);
+  }
 alert("🎆 Fireworks Celebration 🎆");
 }
 
