@@ -3,6 +3,8 @@
 <head>
 <title>Birthday Surprise</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 
 body{
@@ -17,7 +19,7 @@ overflow:hidden;
 .page{
 display:none;
 height:100vh;
-padding-top:120px;
+padding-top:100px;
 }
 
 .active{
@@ -39,10 +41,12 @@ button:hover{
 background:#e91e63;
 }
 
+/* BALLOONS */
+
 .balloon{
 position:absolute;
-font-size:40px;
-animation:float 6s infinite;
+font-size:35px;
+animation:float 10s linear infinite;
 }
 
 @keyframes float{
@@ -50,20 +54,28 @@ animation:float 6s infinite;
 100%{transform:translateY(-10vh);}
 }
 
-#gift{
-font-size:120px;
-cursor:pointer;
+/* HEART RAIN */
+
+.heart{
+position:absolute;
+color:red;
+font-size:24px;
+animation:fall 6s linear infinite;
 }
+
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+/* CAKE */
 
 #cake{
 font-size:120px;
 cursor:pointer;
 }
 
-#typing{
-font-size:28px;
-margin-top:20px;
-}
+/* SLIDESHOW */
 
 .slideshow{
 display:flex;
@@ -74,15 +86,36 @@ margin-top:30px;
 
 .slideshow img{
 width:250px;
+max-width:80%;
 border-radius:10px;
 display:none;
 }
+
+/* FIREWORKS */
 
 canvas{
 position:fixed;
 top:0;
 left:0;
 pointer-events:none;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+h1{font-size:28px;}
+h2{font-size:20px;}
+
+button{
+font-size:16px;
+padding:12px 20px;
+}
+
+#cake{
+font-size:90px;
+}
+
 }
 
 </style>
@@ -103,18 +136,14 @@ pointer-events:none;
 
 <!-- PAGE 2 BALLOONS -->
 <div class="page" id="p2">
-<h1>🎈 Balloons Celebration 🎈</h1>
+<h1>🎈 Birthday Balloons 🎈</h1>
 
-<div class="balloon" style="left:10%">🎈</div>
-<div class="balloon" style="left:30%">🎈</div>
-<div class="balloon" style="left:50%">🎈</div>
-<div class="balloon" style="left:70%">🎈</div>
-<div class="balloon" style="left:90%">🎈</div>
+<div id="balloons"></div>
 
 <button onclick="next(3)">Next</button>
 </div>
 
-<!-- PAGE 3 TYPING MESSAGE -->
+<!-- PAGE 3 MESSAGE -->
 <div class="page" id="p3">
 <h1>Special Message</h1>
 <h2 id="typing"></h2>
@@ -124,7 +153,7 @@ pointer-events:none;
 <!-- PAGE 4 GIFT -->
 <div class="page" id="p4">
 <h1>🎁 Open Your Gift 🎁</h1>
-<div id="gift" onclick="openGift()">🎁</div>
+<div style="font-size:120px;cursor:pointer" onclick="openGift()">🎁</div>
 <h2 id="giftMsg"></h2>
 <button onclick="next(5)">Next</button>
 </div>
@@ -132,8 +161,11 @@ pointer-events:none;
 <!-- PAGE 5 CAKE -->
 <div class="page" id="p5">
 <h1>🎂 Birthday Cake 🎂</h1>
-<div id="cake" onclick="cutCake()">🎂</div>
-<h2 id="cakeMsg"></h2>
+
+<div id="cake" onclick="blowCandles()">🎂</div>
+
+<h2 id="cakeMsg">Click cake to blow candles</h2>
+
 <button onclick="next(6)">Next</button>
 </div>
 
@@ -148,89 +180,192 @@ pointer-events:none;
 </div>
 
 <button onclick="startSlide()">Start Slideshow</button>
+
 <br>
+
 <button onclick="next(7)">Next</button>
+
 </div>
 
 <!-- PAGE 7 FIREWORKS -->
 <div class="page" id="p7">
-<h1>🎆 Fireworks 🎆</h1>
+
+<h1>🎆 Fireworks Celebration 🎆</h1>
+
 <canvas id="fire"></canvas>
+
 <button onclick="fireworks()">Start Fireworks</button>
+
 <br>
+
 <button onclick="next(8)">Final Surprise</button>
+
 </div>
 
 <!-- PAGE 8 LOVE LETTER -->
 <div class="page" id="p8">
+
 <h1>💌 Secret Letter</h1>
+
 <h2>You are one of the most amazing people in my life.</h2>
+
 <h2>May your 20th birthday bring happiness, success and love.</h2>
+
 <h1>❤️ Happy Birthday ❤️</h1>
+
+<div id="hearts"></div>
+
 </div>
 
 <script>
 
-let text = "Happy 20th Birthday! May your life be full of happiness ❤️";
-let i = 0;
+/* MESSAGE TYPING */
+
+let text="Happy 20th Birthday! May your life be full of happiness ❤️";
+let i=0;
 
 function typeEffect(){
-if(i < text.length){
-document.getElementById("typing").innerHTML += text.charAt(i);
+
+if(i<text.length){
+
+document.getElementById("typing").innerHTML+=text.charAt(i);
+
 i++;
-setTimeout(typeEffect,70);
+
+setTimeout(typeEffect,60);
+
 }
+
 }
+
+/* START */
 
 function startSite(){
+
 document.getElementById("music").play();
+
+createBalloons();
+
 next(2);
+
 typeEffect();
+
 }
+
+/* PAGE CHANGE */
 
 function next(n){
+
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
 document.getElementById("p"+n).classList.add("active");
+
 }
+
+/* BALLOONS */
+
+function createBalloons(){
+
+for(let i=0;i<50;i++){
+
+let b=document.createElement("div");
+
+b.className="balloon";
+
+b.innerHTML="🎈";
+
+b.style.left=Math.random()*100+"%";
+
+b.style.animationDuration=6+Math.random()*5+"s";
+
+document.getElementById("balloons").appendChild(b);
+
+}
+
+}
+
+/* HEART RAIN */
+
+for(let i=0;i<40;i++){
+
+let h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML="💖";
+
+h.style.left=Math.random()*100+"%";
+
+h.style.animationDuration=4+Math.random()*4+"s";
+
+document.body.appendChild(h);
+
+}
+
+/* GIFT */
 
 function openGift(){
+
 document.getElementById("giftMsg").innerHTML="Surprise! You are turning 20 🎉";
+
 }
 
-function cutCake(){
-document.getElementById("cakeMsg").innerHTML="Cake Cut! Make a wish 🎂";
+/* CAKE */
+
+function blowCandles(){
+
+document.getElementById("cakeMsg").innerHTML="Candles Blown! Make a wish 🎂";
+
 }
+
+/* SLIDESHOW */
 
 function startSlide(){
 
-var slides=document.querySelectorAll(".slide");
-var i=0;
+let slides=document.querySelectorAll(".slide");
+
+let i=0;
 
 slides[i].style.display="block";
 
 setInterval(function(){
+
 slides[i].style.display="none";
+
 i=(i+1)%slides.length;
+
 slides[i].style.display="block";
+
 },2000);
 
 }
 
+/* FIREWORKS */
+
 function fireworks(){
 
-var canvas=document.getElementById("fire");
-var ctx=canvas.getContext("2d");
+let canvas=document.getElementById("fire");
+
+let ctx=canvas.getContext("2d");
 
 canvas.width=window.innerWidth;
+
 canvas.height=window.innerHeight;
 
-for(let i=0;i<200;i++){
+for(let i=0;i<300;i++){
+
 ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+
 ctx.beginPath();
+
 ctx.arc(Math.random()*canvas.width,
+
 Math.random()*canvas.height,
+
 5,0,Math.PI*2);
+
 ctx.fill();
+
 }
 
 }
