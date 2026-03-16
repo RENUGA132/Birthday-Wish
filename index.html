@@ -16,8 +16,8 @@ overflow:hidden;
 
 .page{
 display:none;
-padding-top:120px;
 height:100vh;
+padding-top:120px;
 }
 
 .active{
@@ -25,22 +25,18 @@ display:block;
 }
 
 button{
-padding:15px 35px;
-font-size:20px;
+padding:15px 30px;
+font-size:18px;
 border:none;
 border-radius:10px;
 background:#ff4081;
 color:white;
 cursor:pointer;
-margin-top:30px;
+margin-top:20px;
 }
 
 button:hover{
 background:#e91e63;
-}
-
-h1{
-font-size:50px;
 }
 
 .balloon{
@@ -54,23 +50,34 @@ animation:float 6s infinite;
 100%{transform:translateY(-10vh);}
 }
 
+#gift{
+font-size:120px;
+cursor:pointer;
+}
+
 #cake{
 font-size:120px;
 cursor:pointer;
 }
 
-#message{
-font-size:30px;
+#typing{
 border-right:3px solid white;
 white-space:nowrap;
 overflow:hidden;
 width:0;
+font-size:28px;
 animation:typing 5s steps(40,end) forwards;
 }
 
 @keyframes typing{
 from{width:0}
 to{width:100%}
+}
+
+.slideshow img{
+width:250px;
+border-radius:10px;
+display:none;
 }
 
 canvas{
@@ -85,83 +92,134 @@ pointer-events:none;
 
 <body>
 
+<audio autoplay loop>
+<source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
+</audio>
+
 <!-- PAGE 1 -->
-<div class="page active" id="page1">
+<div class="page active" id="p1">
 <h1>🎉 Welcome 🎉</h1>
-<h2>A Special Birthday Surprise Awaits</h2>
-<button onclick="nextPage(2)">Start</button>
+<h2>A Special Birthday Surprise</h2>
+<button onclick="next(2)">Start</button>
 </div>
 
 <!-- PAGE 2 BALLOONS -->
-<div class="page" id="page2">
-<h1>🎈 Birthday Balloons 🎈</h1>
+<div class="page" id="p2">
+<h1>🎈 Balloons Celebration 🎈</h1>
+
 <div class="balloon" style="left:10%">🎈</div>
 <div class="balloon" style="left:30%">🎈</div>
 <div class="balloon" style="left:50%">🎈</div>
 <div class="balloon" style="left:70%">🎈</div>
 <div class="balloon" style="left:90%">🎈</div>
-<button onclick="nextPage(3)">Next Surprise</button>
+
+<button onclick="next(3)">Next</button>
 </div>
 
 <!-- PAGE 3 TYPING MESSAGE -->
-<div class="page" id="page3">
+<div class="page" id="p3">
 <h1>Special Message</h1>
-<div id="message">Happy 20th Birthday! May all your dreams come true ❤️</div>
-<button onclick="nextPage(4)">Next</button>
+<div id="typing">Happy 20th Birthday! May your life be full of happiness ❤️</div>
+<button onclick="next(4)">Next</button>
 </div>
 
-<!-- PAGE 4 CAKE -->
-<div class="page" id="page4">
-<h1>🎂 Cake Time 🎂</h1>
+<!-- PAGE 4 GIFT -->
+<div class="page" id="p4">
+<h1>🎁 Open Your Gift 🎁</h1>
+<div id="gift" onclick="openGift()">🎁</div>
+<h2 id="giftMsg"></h2>
+<button onclick="next(5)">Next</button>
+</div>
+
+<!-- PAGE 5 CAKE -->
+<div class="page" id="p5">
+<h1>🎂 Birthday Cake 🎂</h1>
 <div id="cake" onclick="cutCake()">🎂</div>
-<p>Click the cake to cut it</p>
-<p id="cakeMsg"></p>
-<button onclick="nextPage(5)">Next</button>
+<h2 id="cakeMsg"></h2>
+<button onclick="next(6)">Next</button>
 </div>
 
-<!-- PAGE 5 FIREWORKS -->
-<div class="page" id="page5">
-<h1>🎆 Fireworks Celebration 🎆</h1>
-<canvas id="fireworks"></canvas>
-<button onclick="startFireworks()">Start Fireworks</button>
+<!-- PAGE 6 SLIDESHOW -->
+<div class="page" id="p6">
+<h1>📸 Memories</h1>
+
+<div class="slideshow">
+<img src="https://picsum.photos/300?1" class="slide">
+<img src="https://picsum.photos/300?2" class="slide">
+<img src="https://picsum.photos/300?3" class="slide">
+</div>
+
+<button onclick="startSlide()">Start Slideshow</button>
 <br>
-<button onclick="nextPage(6)">Final Surprise</button>
+<button onclick="next(7)">Next</button>
 </div>
 
-<!-- PAGE 6 ROMANTIC -->
-<div class="page" id="page6">
-<h1>❤️ Final Surprise ❤️</h1>
-<h2>You are the most special person in my life.</h2>
-<h2>Happy 20th Birthday 🎂</h2>
-<h3>May your life be filled with happiness and love.</h3>
+<!-- PAGE 7 FIREWORKS -->
+<div class="page" id="p7">
+<h1>🎆 Fireworks 🎆</h1>
+<canvas id="fire"></canvas>
+<button onclick="fireworks()">Start Fireworks</button>
+<br>
+<button onclick="next(8)">Final Surprise</button>
+</div>
+
+<!-- PAGE 8 LOVE LETTER -->
+<div class="page" id="p8">
+<h1>💌 Secret Letter</h1>
+<h2>You are one of the most amazing people in my life.</h2>
+<h2>May your 20th birthday bring happiness, success and love.</h2>
+<h1>❤️ Happy Birthday ❤️</h1>
 </div>
 
 <script>
 
-function nextPage(n){
+function next(n){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById("page"+n).classList.add("active");
+document.getElementById("p"+n).classList.add("active");
+}
+
+function openGift(){
+document.getElementById("giftMsg").innerHTML="Surprise! You are turning 20 🎉";
 }
 
 function cutCake(){
-document.getElementById("cakeMsg").innerHTML="Cake Cut! Make a wish 🎉";
+document.getElementById("cakeMsg").innerHTML="Cake Cut! Make a wish 🎂";
 }
 
-function startFireworks(){
+function startSlide(){
 
-var canvas=document.getElementById("fireworks");
+var slides=document.querySelectorAll(".slide");
+var i=0;
+
+slides[i].style.display="block";
+
+setInterval(function(){
+
+slides[i].style.display="none";
+i=(i+1)%slides.length;
+slides[i].style.display="block";
+
+},2000);
+
+}
+
+function fireworks(){
+
+var canvas=document.getElementById("fire");
 var ctx=canvas.getContext("2d");
 
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
-for(let i=0;i<150;i++){
+for(let i=0;i<200;i++){
+
 ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
 ctx.beginPath();
 ctx.arc(Math.random()*canvas.width,
 Math.random()*canvas.height,
 5,0,Math.PI*2);
 ctx.fill();
+
 }
 
 }
