@@ -533,7 +533,7 @@ function startBalloons(){
   balloonInterval = setInterval(createBalloons,1000);
  setTimeout(() => {
     clearInterval(balloonInterval);
-  }, 20000);
+  }, 50000);
 }
 function openGift(){
 document.getElementById("giftMsg").innerHTML = `
@@ -604,7 +604,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   layer.appendChild(f);
 
-  setTimeout(()=>f.remove(),1500);
+  setTimeout(()=>f.remove(),5000);
 }
 /* 💖 HEART FIREWORK */
 function heartFireworks(){
@@ -621,7 +621,7 @@ function heartFireworks(){
     f.style.top=(40-y)+"%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),10000);
+    setTimeout(()=>f.remove(),20000);
   }
 }
 
@@ -640,7 +640,7 @@ function nameFireworks(){
     f.style.top="30%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),7000);
+    setTimeout(()=>f.remove(),15000);
   }
 
   for(let i=0;i<line2.length;i++){
@@ -652,7 +652,18 @@ function nameFireworks(){
     f.style.top="40%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),2000);
+    setTimeout(()=>f.remove(),15000);
+  }
+   for(let i=0;i<line3.length;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.innerHTML=line2[i];
+
+    f.style.left=(20+i*5)+"%";
+    f.style.top="40%";
+
+    layer.appendChild(f);
+    setTimeout(()=>f.remove(),15000);
   }
 }
 
@@ -663,8 +674,8 @@ function startFireworks(){
   if(!fireworkInterval){
     fireworkInterval=setInterval(fireworks,1200);
 
-    setTimeout(heartFireworks,1500);
-    setTimeout(nameFireworks,2500);
+    setTimeout(heartFireworks,20000);
+    setTimeout(nameFireworks,15000);
 
     let audio=new Audio("https://www.soundjay.com/explosion/explosion-01.mp3");
     audio.play();
