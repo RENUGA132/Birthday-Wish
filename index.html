@@ -81,9 +81,10 @@ margin-top:30px;
 }
 
 .slideshow img{
-width:250px;
-max-width:80%;
-border-radius:10px;
+width:80%;
+max-width:500px;
+height:auto;
+border-radius:15px;
 display:none;
 }
 
@@ -170,6 +171,7 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
     0 0 10px red,
     0 0 20px pink,
     0 0 40px hotpink;
+    0 0 60px white;
   animation: pop 4s ease-out forwards;
   z-index:20;
 }
@@ -336,7 +338,8 @@ May all your dreams come true. ❤️
 <div class="page" id="p6">
 
 <h1>📸 Memories</h1>
-
+ <h2>HAPPY BIRTHDAY LADDUUUU...💫✨</h2>
+<h1>I LOVE TOO LADDUUU ❤️🥰😘💋</h1>
 <div class="slideshow">
  <img src="WhatsApp Image 2026-03-31 at 6.31.39 PM.jpeg" class="slide">
 <img src="WhatsApp Image 2026-03-31 at 6.31.38 PM.jpeg" class="slide">
@@ -599,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let f = document.createElement("div");
   f.className = "firework";
   f.innerHTML = "✨";
-
+f.style.fontSize = "28px"; 
   f.style.left = Math.random()*100 + "%";
   f.style.top = Math.random()*50 + "%";
 
@@ -613,7 +616,7 @@ function heartFireworks(){
     let f=document.createElement("div");
     f.className="firework";
     f.innerHTML="💖";
-
+f.style.fontSize = "40px"; 
     let t=Math.PI*2*(i/40);
     let x=16*Math.pow(Math.sin(t),3);
     let y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
@@ -636,7 +639,7 @@ function nameFireworks(){
     let f=document.createElement("div");
     f.className="firework";
     f.innerHTML=line1[i];
-
+f.style.fontSize = "28px";
     f.style.left=(10+i*4)+"%";
     f.style.top="30%";
 
@@ -648,7 +651,7 @@ function nameFireworks(){
     let f=document.createElement("div");
     f.className="firework";
     f.innerHTML=line2[i];
-
+f.style.fontSize = "28px";
     f.style.left=(20+i*4)+"%";
     f.style.top="40%";
 
@@ -659,7 +662,7 @@ function nameFireworks(){
     let f=document.createElement("div");
     f.className="firework";
     f.innerHTML=line3[i];
-
+f.style.fontSize = "28px";
     f.style.left=(5+i*3.5)+"%";
     f.style.top="50%";
 
