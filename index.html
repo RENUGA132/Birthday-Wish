@@ -170,7 +170,7 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
   text-shadow:
     0 0 10px red,
     0 0 20px pink,
-    0 0 40px hotpink;
+    0 0 40px hotpink,
     0 0 60px white;
   animation: pop 4s ease-out forwards;
   z-index:20;
@@ -232,7 +232,7 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
 
 <body>
 
-<audio id="music" loop>
+<audio id="music" loop hidden>
   <source src="thangamey_thangamey.mp3" type="audio/mpeg">
 </audio>
 
@@ -608,7 +608,7 @@ f.style.fontSize = "30px";
 
   layer.appendChild(f);
 
-  setTimeout(()=>f.remove(),150000);
+  setTimeout(()=>f.remove(),15000);
 }
 /* 💖 HEART FIREWORK */
 function heartFireworks(){
@@ -681,8 +681,6 @@ function startFireworks(){
     setTimeout(heartFireworks,3000);
     setTimeout(nameFireworks,6000);
 
-    let audio=new Audio("thangamey_thangamey.mp3");
-    audio.play();
    setTimeout(() => {
       clearInterval(fireworkInterval);
       fireworkInterval = null;
