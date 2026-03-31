@@ -104,9 +104,6 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
   margin: 50px auto;
   font-size: 18px;
   line-height: 1.6;
-  white-space: normal;        /* ✅ allows wrapping */
-  word-wrap: break-word;      /* ✅ breaks long words */
-  overflow-wrap: break-word;
 }
 
 /* Cursor effect */
@@ -250,14 +247,14 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
 <h2>Some days are special… but today is extraordinary,
 because it’s the birthday of the man<br>
   who makes my life a beautiful story.<br>
-Happy Birthday my love! 🎂✨<br>
+Happy Birthday Ladduuuu! 🎂✨<br>
 😘 😘 😘
 💋 💋 💋
 😚 😚 😚
 😗 😗 😗
 🥰😘💋</h2>
 
-<h1>Happy Birthday my love 😘💋</h1>
+<h1>Happy Birthday Ladduuu 😘💋</h1>
 
 <button onclick="startSite()">Start</button>
 
@@ -536,7 +533,7 @@ function startBalloons(){
   balloonInterval = setInterval(createBalloons,1000);
  setTimeout(() => {
     clearInterval(balloonInterval);
-  }, 10000);
+  }, 20000);
 }
 function openGift(){
 document.getElementById("giftMsg").innerHTML = `
@@ -624,14 +621,15 @@ function heartFireworks(){
     f.style.top=(40-y)+"%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),2000);
+    setTimeout(()=>f.remove(),10000);
   }
 }
 
 /* 🎇 TEXT FIREWORK */
 function nameFireworks(){
-  let line1="I LOVE YOU";
+  let line1="I LOVE YOU TOO LADDUU😘💋";
   let line2="FOREVER ❤️";
+  let line3="WISH YOU MANY MORE HAPPY RETURNS OF THE LADDUU ❤️✨";
 
   for(let i=0;i<line1.length;i++){
     let f=document.createElement("div");
@@ -642,7 +640,7 @@ function nameFireworks(){
     f.style.top="30%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),2000);
+    setTimeout(()=>f.remove(),7000);
   }
 
   for(let i=0;i<line2.length;i++){
