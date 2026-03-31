@@ -17,9 +17,11 @@ overflow-y:auto;
 }
 
 .page{
-display:none;
-height:100vh;
-padding-top:100px;
+ height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
 }
 
 .active{
@@ -114,11 +116,33 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
   0%,50%,100% { opacity:1; }
   25%,75% { opacity:0; }
 }
-   .firework {
-      position: absolute;
-      font-size: 24px;
-      font-weight: bold;
-      color: white;
+
+ .particle{
+      position:absolute;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      animation: blast 1.2s ease-out forwards;
+      z-index:9999;
+    }
+
+    @keyframes blast{
+      0%{
+        transform: translate(0,0);
+        opacity:1;
+      }
+      100%{
+        transform: translate(var(--dx), var(--dy));
+        opacity:0;
+      }
+    }
+
+    /* 🎆 TEXT FIREWORK */
+    .firework{
+      position:absolute;
+      font-size:24px;
+      font-weight:bold;
+      color:white;
       text-shadow:
         0 0 10px red,
         0 0 20px pink,
@@ -127,21 +151,10 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
       z-index:9999;
     }
 
-/* Move upward */
-@keyframes shoot {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  70% {
-    transform: translateY(-300px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-350px) scale(1.5);
-    opacity: 0;
-  }
-}
+    @keyframes pop{
+      0%{transform:scale(0.5);opacity:1;}
+      100%{transform:scale(1.5);opacity:0;}
+    }
 
 .letter {
   max-width: 700px;
@@ -503,81 +516,117 @@ slides[i].style.display="block";
 
 }
 
-/* 🎆 Normal Fireworks */
-function fireworks(){
-  for(let i=0;i<25;i++){
-    let f = document.createElement("div");
-    f.className="firework";
+/* 💥 EXPLOSION FUNCTION */
+function explode(x,y){
+  let colors = ["#ff0000","#ffff00","#00ff00","#00ffff","#ff00ff","#ffffff"];
 
-    let texts = ["🎆","✨","💥","🎇","🔥 FIRE","❤️ LOVE","🎉 HAPPY","💥 BOOM","✨ WOW"];
-    f.innerHTML = texts[Math.floor(Math.random()*texts.length)];
+  for(let i=0;i<30;i++){
+    let p = document.createElement("div");
+    p.className="particle";
 
-    f.style.left = Math.random()*100 + "%";
-    f.style.top = Math.random()*80 + "%";
+    p.style.left = x + "px";
+    p.style.top = y + "px";
 
-    document.body.appendChild(f);
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
 
-    setTimeout(()=>f.remove(),1500);
+    let angle = Math.random()*2*Math.PI;
+    let dist = Math.random()*120;
+
+    let dx = Math.cos(angle)*dist;
+    let dy = Math.sin(angle)*dist;
+
+    p.style.setProperty("--dx", dx+"px");
+    p.style.setProperty("--dy", dy+"px");
+
+    document.body.appendChild(p);
+
+    setTimeout(()=>p.remove(),1200);
   }
 }
 
-/* 💖 Heart Fireworks */
+/* 🎆 RANDOM FIREWORKS */
+function fireworks(){
+  for(let i=0;i<6;i++){
+    let x = Math.random()*window.innerWidth;
+    let y = Math.random()*window.innerHeight/2;
+    explode(x,y);
+  }
+}
+
+/* 💖 HEART FIREWORK */
 function heartFireworks(){
-  for(let i=0; i<40; i++){
-    let f = document.createElement("div");
-    f.className = "firework";
-    f.innerHTML = "💖";
+  for(let i=0;i<40;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.innerHTML="💖";
 
-    let t = Math.PI * 2 * (i / 40);
+    let t=Math.PI*2*(i/40);
+    let x=16*Math.pow(Math.sin(t),3);
+    let y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
 
-    let x = 16 * Math.pow(Math.sin(t), 3);
-    let y = 13 * Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-
-    f.style.left = (50 + x) + "%";
-    f.style.top = (40 - y) + "%";
+    f.style.left=(50+x)+"%";
+    f.style.top=(40-y)+"%";
 
     document.body.appendChild(f);
-
     setTimeout(()=>f.remove(),2000);
   }
 }
 
-/* 🎆 Text Fireworks */
+/* 🎇 TEXT FIREWORK (2 LINES) */
 function nameFireworks(){
-  let message = "I LOVE YOU";
 
-  for(let i=0; i<message.length; i++){
-    let f = document.createElement("div");
-    f.className = "firework";
-    f.innerHTML = message[i];
+  let line1="I LOVE YOU";
+  let line2="FOREVER ❤️";
 
-    f.style.left = (20 + i * 5) + "%";
-    f.style.top = "30%";
+  for(let i=0;i<line1.length;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.innerHTML=line1[i];
+
+    f.style.left=(20+i*5)+"%";
+    f.style.top="30%";
 
     document.body.appendChild(f);
+    setTimeout(()=>f.remove(),2000);
+  }
 
+  for(let i=0;i<line2.length;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.innerHTML=line2[i];
+
+    f.style.left=(20+i*5)+"%";
+    f.style.top="40%";
+
+    document.body.appendChild(f);
     setTimeout(()=>f.remove(),2000);
   }
 }
 
 let fireworkInterval;
 
-/* 🚀 Start Everything */
+/* 🚀 START EVERYTHING */
 function startFireworks(){
+
   if(!fireworkInterval){
 
-    fireworkInterval = setInterval(fireworks,1500);
+    fireworkInterval=setInterval(fireworks,1200);
 
-    setTimeout(heartFireworks,1000);
-    setTimeout(nameFireworks,2000);
+    setTimeout(heartFireworks,1500);
+    setTimeout(nameFireworks,2500);
 
-    // ⬇️ Auto scroll
+    // 🔊 SOUND (optional)
+    let audio=new Audio("https://www.soundjay.com/explosion/explosion-01.mp3");
+    audio.play();
+
+    // ⬇️ SCROLL
     document.getElementById("loveMsg").scrollIntoView({
       behavior:"smooth",
       block:"center"
     });
   }
 }
+
 </script>
 
 </body>
