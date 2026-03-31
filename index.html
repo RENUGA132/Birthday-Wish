@@ -137,24 +137,63 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
       }
     }
 
-    /* 🎆 TEXT FIREWORK */
-    .firework{
-      position:absolute;
-      font-size:24px;
-      font-weight:bold;
-      color:white;
-      text-shadow:
-        0 0 10px red,
-        0 0 20px pink,
-        0 0 40px hotpink;
-      animation: pop 1.5s ease-out forwards;
-      z-index:9999;
-    }
+  .container{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+}
 
-    @keyframes pop{
-      0%{transform:scale(0.5);opacity:1;}
-      100%{transform:scale(1.5);opacity:0;}
-    }
+.bg-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Layer ABOVE image */
+#fireworks-layer{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:10;
+}
+
+.firework{
+  position:absolute;
+  font-size:24px;
+  font-weight:bold;
+  color:white;
+  text-shadow:
+    0 0 10px red,
+    0 0 20px pink,
+    0 0 40px hotpink;
+  animation: pop 1.5s ease-out forwards;
+  z-index:20;
+}
+
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes pop{
+  0%{transform:scale(0.5);opacity:1;}
+  100%{transform:scale(1.5);opacity:0;}
+}
+
+@keyframes explode{
+  0%{transform:translate(0,0);opacity:1;}
+  100%{
+    transform:translate(var(--dx),var(--dy));
+    opacity:0;
+  }
+}
 
 .letter {
   max-width: 700px;
@@ -306,13 +345,26 @@ May all your dreams come true. ❤️
 
 <div class="page" id="p7">
 
-<h1>🎆 Fireworks Celebration 🎆</h1>
+  <div class="container">
 
-<button onclick="fireworks()">Start Fireworks</button>
+    <!-- 🖼️ Your background image -->
+    <img src="your-image.jpg" class="bg-img">
 
-<br>
+    <!-- 🎆 Fireworks will appear here -->
+    <div id="fireworks-layer"></div>
 
-<button onclick="next(8)">Final Surprise</button>
+    <!-- 💬 Content on top -->
+    <div class="content">
+      <h1>🎆 Fireworks Celebration 🎆</h1>
+
+      <button onclick="startFireworks()">Start Fireworks</button>
+
+      <br><br>
+
+      <button onclick="next(8)">Final Surprise</button>
+    </div>
+
+  </div>
 
 </div>
 
@@ -519,39 +571,9 @@ slides[i].style.display="block";
 
 }
 
-/* 💥 EXPLOSION FUNCTION */
-function explode(x,y){
-  let colors = ["#ff0000","#ffff00","#00ff00","#00ffff","#ff00ff","#ffffff"];
-
-  for(let i=0;i<30;i++){
-    let p = document.createElement("div");
-    p.className="particle";
-
-    p.style.left = x + "px";
-    p.style.top = y + "px";
-
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-
-    let angle = Math.random()*2*Math.PI;
-    let dist = Math.random()*120;
-
-    let dx = Math.cos(angle)*dist;
-    let dy = Math.sin(angle)*dist;
-
-    p.style.setProperty("--dx", dx+"px");
-    p.style.setProperty("--dy", dy+"px");
-
-    document.body.appendChild(p);
-
-    setTimeout(()=>p.remove(),1200);
-  }
-}
-
-/* 🎆 RANDOM FIREWORKS */
-function fireworks(){
-  for(let i=0;i<6;i++){
-    let x = Math.random()*window.innerWidth;
-    let y = Math.random()*window.innerHeight/2;
+ for(let i=0;i<6;i++){
+    let x = Math.random()*rect.width;
+    let y = Math.random()*rect.height/2;
     explode(x,y);
   }
 }
@@ -570,14 +592,13 @@ function heartFireworks(){
     f.style.left=(50+x)+"%";
     f.style.top=(40-y)+"%";
 
-    document.body.appendChild(f);
+    layer.appendChild(f);
     setTimeout(()=>f.remove(),2000);
   }
 }
 
-/* 🎇 TEXT FIREWORK (2 LINES) */
+/* 🎇 TEXT FIREWORK */
 function nameFireworks(){
-
   let line1="I LOVE YOU";
   let line2="FOREVER ❤️";
 
@@ -589,7 +610,7 @@ function nameFireworks(){
     f.style.left=(20+i*5)+"%";
     f.style.top="30%";
 
-    document.body.appendChild(f);
+    layer.appendChild(f);
     setTimeout(()=>f.remove(),2000);
   }
 
@@ -601,34 +622,26 @@ function nameFireworks(){
     f.style.left=(20+i*5)+"%";
     f.style.top="40%";
 
-    document.body.appendChild(f);
+    layer.appendChild(f);
     setTimeout(()=>f.remove(),2000);
   }
 }
 
 let fireworkInterval;
 
-/* 🚀 START EVERYTHING */
+/* 🚀 START */
 function startFireworks(){
-clearInterval(balloonInterval);
   if(!fireworkInterval){
-
     fireworkInterval=setInterval(fireworks,1200);
 
     setTimeout(heartFireworks,1500);
     setTimeout(nameFireworks,2500);
 
-    // 🔊 SOUND (optional)
     let audio=new Audio("https://www.soundjay.com/explosion/explosion-01.mp3");
     audio.play();
-
-    // ⬇️ SCROLL
-    document.getElementById("loveMsg").scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
   }
 }
+
 
 </script>
 
