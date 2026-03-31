@@ -18,7 +18,7 @@ overflow-y:auto;
 
 .page{
  height:100vh;
-      display:flex;
+      display:none;
       justify-content:center;
       align-items:center;
       flex-direction:column;
@@ -45,9 +45,9 @@ background:#e91e63;
 
 .balloon {
   position: absolute;
-  bottom: -150px; /* start below screen */
+  bottom: -100px; /* start below screen */
   font-size: 40px;
-  animation: fly 8s linear infinite;
+  animation: fly 5s linear infinite;
 }
 
 @keyframes fly {
@@ -58,7 +58,7 @@ background:#e91e63;
     transform: translateY(-400px) translateX(20px);
   }
   100% {
-    transform: translateY(-1200px) translateX(-20px);
+    transform: translateY(-1000px) translateX(-20px);
   }
 }
 
@@ -450,18 +450,21 @@ function next(n){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById("p"+n).classList.add("active");
 }
-
+let balloonInterval;
 function createBalloons(){
-for(let i=0;i<40;i++){
+for(let i=0;i<8;i++){
 let b=document.createElement("div");
 b.className="balloon";
 b.innerHTML="🎈";
 b.style.left=Math.random()*100+"%";
 b.style.animationDuration=6+Math.random()*5+"s";
 document.body.appendChild(b);
+  setTimeout(()=>b.remove(),8000);
 }
 }
-
+function startBalloons(){
+  balloonInterval = setInterval(createBalloons,1000);
+}
 function openGift(){
 document.getElementById("giftMsg").innerHTML = `
 🎉 Surprise!  You are turning 20 🎉<br>
@@ -607,7 +610,7 @@ let fireworkInterval;
 
 /* 🚀 START EVERYTHING */
 function startFireworks(){
-
+clearInterval(balloonInterval);
   if(!fireworkInterval){
 
     fireworkInterval=setInterval(fireworks,1200);
