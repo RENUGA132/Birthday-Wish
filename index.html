@@ -170,7 +170,7 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
     0 0 10px red,
     0 0 20px pink,
     0 0 40px hotpink;
-  animation: pop 1.5s ease-out forwards;
+  animation: pop 2.5s ease-out forwards;
   z-index:20;
 }
 
@@ -604,7 +604,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   layer.appendChild(f);
 
-  setTimeout(()=>f.remove(),5000);
+  setTimeout(()=>f.remove(),8000);
 }
 /* 💖 HEART FIREWORK */
 function heartFireworks(){
@@ -621,7 +621,7 @@ function heartFireworks(){
     f.style.top=(40-y)+"%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),20000);
+    setTimeout(()=>f.remove(),15000);
   }
 }
 
@@ -640,7 +640,7 @@ function nameFireworks(){
     f.style.top="30%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),15000);
+    setTimeout(()=>f.remove(),20000);
   }
 
   for(let i=0;i<line2.length;i++){
@@ -657,7 +657,7 @@ function nameFireworks(){
    for(let i=0;i<line3.length;i++){
     let f=document.createElement("div");
     f.className="firework";
-    f.innerHTML=line2[i];
+    f.innerHTML=line3[i];
 
     f.style.left=(20+i*5)+"%";
     f.style.top="40%";
@@ -672,17 +672,17 @@ let fireworkInterval;
 /* 🚀 START */
 function startFireworks(){
   if(!fireworkInterval){
-    fireworkInterval=setInterval(fireworks,1200);
+    fireworkInterval=setInterval(fireworks,800);
 
-    setTimeout(heartFireworks,20000);
-    setTimeout(nameFireworks,15000);
+    setTimeout(heartFireworks,2000);
+    setTimeout(nameFireworks,4000);
 
     let audio=new Audio("https://www.soundjay.com/explosion/explosion-01.mp3");
     audio.play();
    setTimeout(() => {
       clearInterval(fireworkInterval);
       fireworkInterval = null;
-    }, 8000);
+    }, 20000);
   }
 }
 
