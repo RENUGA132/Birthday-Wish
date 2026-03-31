@@ -12,7 +12,8 @@ font-family:Arial;
 text-align:center;
 background:linear-gradient(45deg,#ff758c,#ff7eb3);
 color:white;
-overflow:hidden;
+overflow-x:hidden;
+overflow-y:auto; 
 }
 
 .page{
@@ -42,9 +43,9 @@ background:#e91e63;
 
 .balloon {
   position: absolute;
-  bottom: -100px; /* start below screen */
+  bottom: -150px; /* start below screen */
   font-size: 40px;
-  animation: fly 5s linear infinite;
+  animation: fly 8s linear infinite;
 }
 
 @keyframes fly {
@@ -55,7 +56,7 @@ background:#e91e63;
     transform: translateY(-400px) translateX(20px);
   }
   100% {
-    transform: translateY(-800px) translateX(-20px);
+    transform: translateY(-1200px) translateX(-20px);
   }
 }
 
@@ -113,24 +114,31 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
   0%,50%,100% { opacity:1; }
   25%,75% { opacity:0; }
 }
-.firework {
-  position: absolute;
-  font-size: 25px;
-  animation: explode 2s ease-out forwards;
-  pointer-events: none;
-}
+   .firework {
+      position: absolute;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      text-shadow:
+        0 0 10px red,
+        0 0 20px pink,
+        0 0 40px hotpink;
+      animation: pop 1.5s ease-out forwards;
+      z-index:9999;
+    }
 
-@keyframes explode {
+/* Move upward */
+@keyframes shoot {
   0% {
-    transform: translateY(0) scale(0.5);
+    transform: translateY(0);
     opacity: 1;
   }
-  50% {
-    transform: translateY(-200px) scale(1.5);
+  70% {
+    transform: translateY(-300px);
     opacity: 1;
   }
   100% {
-    transform: translateY(-300px) scale(0.5);
+    transform: translateY(-350px) scale(1.5);
     opacity: 0;
   }
 }
@@ -173,8 +181,9 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
 <h2>Welcome to the most beautiful day of my life</h2>
 
 <h2>Some days are special… but today is extraordinary,
-because it’s the birthday of the man who makes my life a beautiful story.<br>
-Happy Birthday my love! 🎂✨
+because it’s the birthday of the man<br>
+  who makes my life a beautiful story.<br>
+Happy Birthday my love! 🎂✨<br>
 😘 😘 😘
 💋 💋 💋
 😚 😚 😚
@@ -226,7 +235,7 @@ Happy Birthday my love! ❤️”</h2>
 <div class="page" id="p4">
 
 <h1>🎁 Open Your Gift 🎁</h1>
-
+  <h2> Click the Gift</h2>
 <div style="font-size:120px;cursor:pointer" onclick="openGift()">🎁</div>
 
 <h2 id="giftMsg"></h2>
@@ -240,6 +249,7 @@ Happy Birthday my love! ❤️”</h2>
 <div class="page" id="p5">
 
 <h1>🎂 Birthday Cake 🎂</h1>
+    <h2> Click the Cake</h2>
 
 <div onclick="blowCandles()" style="font-size:120px;cursor:pointer">🎂</div>
 
@@ -361,7 +371,7 @@ Forever yours. ❤️
 இனிய பிறந்தநாள் வாழ்த்துக்கள் என் அன்பே. ❤️
 </p>
 
-<div class="glow">❤️ I LOVE YOU ❤️</div>
+<div class="glow" id="loveMsg">❤️ I LOVE YOU ❤️</div>
 
 </div>
 </div>
@@ -492,17 +502,39 @@ slides[i].style.display="block";
 },2000);
 
 }
-/* Fireworks Function */
+
+/* 🎆 Normal Fireworks */
 function fireworks(){
-  for(let i=0;i<30;i++){
+  for(let i=0;i<25;i++){
     let f = document.createElement("div");
     f.className="firework";
 
-    let icons = ["🎆","✨","💥","🎇"];
-    f.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+    let texts = ["🎆","✨","💥","🎇","🔥 FIRE","❤️ LOVE","🎉 HAPPY","💥 BOOM","✨ WOW"];
+    f.innerHTML = texts[Math.floor(Math.random()*texts.length)];
 
     f.style.left = Math.random()*100 + "%";
-    f.style.bottom = "0px";
+    f.style.top = Math.random()*80 + "%";
+
+    document.body.appendChild(f);
+
+    setTimeout(()=>f.remove(),1500);
+  }
+}
+
+/* 💖 Heart Fireworks */
+function heartFireworks(){
+  for(let i=0; i<40; i++){
+    let f = document.createElement("div");
+    f.className = "firework";
+    f.innerHTML = "💖";
+
+    let t = Math.PI * 2 * (i / 40);
+
+    let x = 16 * Math.pow(Math.sin(t), 3);
+    let y = 13 * Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+
+    f.style.left = (50 + x) + "%";
+    f.style.top = (40 - y) + "%";
 
     document.body.appendChild(f);
 
@@ -510,12 +542,42 @@ function fireworks(){
   }
 }
 
-/* Start Fireworks continuously */
-function startFireworks(){
-  setInterval(fireworks,800);
+/* 🎆 Text Fireworks */
+function nameFireworks(){
+  let message = "I LOVE YOU";
+
+  for(let i=0; i<message.length; i++){
+    let f = document.createElement("div");
+    f.className = "firework";
+    f.innerHTML = message[i];
+
+    f.style.left = (20 + i * 5) + "%";
+    f.style.top = "30%";
+
+    document.body.appendChild(f);
+
+    setTimeout(()=>f.remove(),2000);
+  }
 }
 
+let fireworkInterval;
 
+/* 🚀 Start Everything */
+function startFireworks(){
+  if(!fireworkInterval){
+
+    fireworkInterval = setInterval(fireworks,1500);
+
+    setTimeout(heartFireworks,1000);
+    setTimeout(nameFireworks,2000);
+
+    // ⬇️ Auto scroll
+    document.getElementById("loveMsg").scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+  }
+}
 </script>
 
 </body>
