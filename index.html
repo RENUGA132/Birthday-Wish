@@ -170,7 +170,7 @@ to{text-shadow:0 0 20px #fff,0 0 40px #ff4d6d;}
     0 0 10px red,
     0 0 20px pink,
     0 0 40px hotpink;
-  animation: pop 2.5s ease-out forwards;
+  animation: pop 4s ease-out forwards;
   z-index:20;
 }
 
@@ -338,10 +338,11 @@ May all your dreams come true. ❤️
 <h1>📸 Memories</h1>
 
 <div class="slideshow">
-
-<img src="https://picsum.photos/300?1" class="slide">
-<img src="https://picsum.photos/300?2" class="slide">
-<img src="https://picsum.photos/300?3" class="slide">
+ <img src="WhatsApp Image 2026-03-31 at 6.31.39 PM.jpeg" class="slide">
+<img src="WhatsApp Image 2026-03-31 at 6.31.38 PM.jpeg" class="slide">
+<img src="WhatsApp Image 2026-03-31 at 6.31.39 PM (1).jpeg" class="slide">
+<img src="WhatsApp Image 2026-03-31 at 6.31.39 PM (2).jpeg" class="slide">
+ <img src="WhatsApp Image 2026-03-31 at 6.31.39 PM (3).jpeg" class="slide">
 
 </div>
 
@@ -604,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   layer.appendChild(f);
 
-  setTimeout(()=>f.remove(),8000);
+  setTimeout(()=>f.remove(),30000);
 }
 /* 💖 HEART FIREWORK */
 function heartFireworks(){
@@ -621,7 +622,7 @@ function heartFireworks(){
     f.style.top=(40-y)+"%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),15000);
+    setTimeout(()=>f.remove(),30000);
   }
 }
 
@@ -636,11 +637,11 @@ function nameFireworks(){
     f.className="firework";
     f.innerHTML=line1[i];
 
-    f.style.left=(20+i*5)+"%";
+    f.style.left=(10+i*4)+"%";
     f.style.top="30%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),20000);
+    setTimeout(()=>f.remove(),30000);
   }
 
   for(let i=0;i<line2.length;i++){
@@ -648,22 +649,22 @@ function nameFireworks(){
     f.className="firework";
     f.innerHTML=line2[i];
 
-    f.style.left=(20+i*5)+"%";
+    f.style.left=(20+i*4)+"%";
     f.style.top="40%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),15000);
+    setTimeout(()=>f.remove(),30000);
   }
    for(let i=0;i<line3.length;i++){
     let f=document.createElement("div");
     f.className="firework";
     f.innerHTML=line3[i];
 
-    f.style.left=(20+i*5)+"%";
-    f.style.top="40%";
+    f.style.left=(5+i*3.5)+"%";
+    f.style.top="50%";
 
     layer.appendChild(f);
-    setTimeout(()=>f.remove(),15000);
+    setTimeout(()=>f.remove(),30000);
   }
 }
 
@@ -672,17 +673,17 @@ let fireworkInterval;
 /* 🚀 START */
 function startFireworks(){
   if(!fireworkInterval){
-    fireworkInterval=setInterval(fireworks,800);
+    fireworkInterval=setInterval(fireworks,1500);
 
-    setTimeout(heartFireworks,2000);
-    setTimeout(nameFireworks,4000);
+    setTimeout(heartFireworks,3000);
+    setTimeout(nameFireworks,6000);
 
     let audio=new Audio("https://www.soundjay.com/explosion/explosion-01.mp3");
     audio.play();
    setTimeout(() => {
       clearInterval(fireworkInterval);
       fireworkInterval = null;
-    }, 20000);
+    }, 30000);
   }
 }
 
